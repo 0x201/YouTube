@@ -104,13 +104,12 @@
 
 5. Запускаем скрипт установки службы
    ```./install_easy.sh```
-   <br /> 
     И делаем следующее
     - Select firewall type - Выбираем на свое усмотрение
     - enable IPV6 suppor - Выбираем отталкиваясь от того какой версии IP вы пользуетесь
     - select MODE - рекомендую выбирать между tpws и nfqws. Я буду показывать напримере nfqws, т.к. работает она лучше.
     - do you want to edit the options - Да, мы хотим изменить, а потому вводим Y и изменяем опции 
-    <br />
+
     ```
     NFQWS_OPT_DESYNC=""
     #NFQWS_OPT_DESYNC_SUFFIX=
@@ -146,8 +145,12 @@
 
 - После настройки опций сохраняемся и выходим.
 - WAN interface - Рекомендую выбрать ANY
-- enable http support - Если вы хотите разблокировать только YouTube, могу порекомендовать отключить, т.к. запросы на сервера Google происходят протоколу https. Вот примерная ссылка на сервер с видео Google:
-  ```https://r2---sn-8vap5-3c2l.googlevideo.com```
+- enable http support - Если вы хотите разблокировать только YouTube, могу порекомендовать отключить, т.к. запросы на сервера Google происходят протоколу https. 
+Вот примерные ссылки на сервер с видео Google:
+  ```
+  https://rr1---sn-u5uuxaxjvhg0-ocje.googlevideo.com/
+  https://r2---sn-8vap5-3c2l.googlevideo.com
+  ```
 - enable https support - Включаем
 - enable quic support - Можно не включать, опять же в зависимости от того будете ли вы пользоваться протоколом QUIC или нет
 - select filtering - Рекомендую выбирать hostlist
@@ -166,7 +169,6 @@
     ```nano /opt/zapret/ipser/zapret-hosts-user.txt```
     Сохраняемся и выходим 
     
-
 2. **(Если хотите QUIC)** В вашем браузере зайдите в доп. настройки
 - Chrome - ```chrome://flags/#enable-quic```
 - Vivaldi - ```vivaldi://flags/#enable-quic```
@@ -193,17 +195,15 @@
 - Теперь ожидаем окончание проверки.
 - После окончания проверки появится итоговый результат. Выглядит он примерно так
   ```ipv4 rutracker.org curl_test_https_tls12:nfqws --dpi-desync=fake,split2 --dpi-desync-ttl=3```
-  <br />
   Важна нам часть после :
   - nfqws это MODE, который вы выбираете в скрипте install_easy.sh, у вас может быть и tpws
   - Строку ```--dpi-desync=fake,split2 --dpi-desync-ttl=3``` нам необходимо вставить в опцию ```NFQWS_OPT_DESYNC``` или ```NFQWS_OPT_DESYNC_QUIC``` 
   
 
-2. Теперь после найденной стратегии запускаем скрипт ```./install_easy.sh```, доходим до "do you want to edit the options" и редактируем конфиг.
+1. Теперь после найденной стратегии запускаем скрипт ```./install_easy.sh```, доходим до "do you want to edit the options" и редактируем конфиг.
 
 ## SpoofDPI (Linux / MacOS)
 1. Скачиваем [SpoofDPI](https://github.com/xvzc/SpoofDPI) с помощью комманд:
-   <br />
    - MacOS Intel
    ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s darwin-amd64```
    - MacOS Apple Silicon
@@ -214,7 +214,6 @@
    ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s linux-arm```
    - Linux arm64
    ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s linux-arm64```
-   <br />
 2. Далее в зависимости от того какая у вас оболочка терминал Bash или Zsh, редактируем файл 
    - Zsh - ```nano ~/.zshrc```
    - Bash - ```nano ~/.bashrc```
