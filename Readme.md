@@ -1,8 +1,40 @@
-# Как починить сервера Google чтобы YouTube снова заработал
+# Как обойти DPI
 
-В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу.
+В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/) или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
 
-## Zapret для YouTube (Подходит для Linux и Роутеров)
+|_[Как обойти DPI](#как-обойти-dpi)
+  &nbsp;&nbsp;&nbsp;&nbsp;| [GoodByeDPI (Windows)](#goodbyedpi-windows)
+  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для YouTube (Linux / Роутеры)](#zapret-для-youtube-подходит-для-linux-и-роутеров)
+  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для всех блокировок](#zapret-для-всех-блокировок)
+  &nbsp;&nbsp;&nbsp;&nbsp;| [SpoofDPI (MacOS / Linux)](#spoofdpi-linux--macos)
+  &nbsp;&nbsp;&nbsp;&nbsp;| [ByeDPI (Android)](#byedpi-на-android)
+  &nbsp;&nbsp;&nbsp;&nbsp;| _ [Решение возникших пробелем](#решение-возникших-проблем)
+  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Скрипты не являются исполняемыми](#скрипты-не-являются-исполняемыми)
+  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Нет Bash](#нет-bash)
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI жрет много батереи](#byedpi-жрет-много-батареи)
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI не работает (Не работает обход блокировок)](#byedpi-не-работает-не-работает-обход-блокировок)  
+
+## GoodByeDPI (Windows)
+1. Скачайте архив с [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/realeses)
+2. Распаковываем в любую удобную для нас папку.
+3. Заходим в неё и редактируем файл:
+</br>
+   - Если вам нужен YouTube рекомендую пользоваться ```1_russia_blacklist_YOUTUBE.cmd``` или ```1_russia_blacklist_YOUTUBE_ALT.cmd```
+   - Ну а если нужна раблокировка всех сайтов, но необязательно YouTube, то открываем ```1_russia_blacklist.cmd```
+   - Не рекомендуется использовать скрипты 
+     ```service_install_russia_blacklist.cmd```
+     ```service_install_russia_blacklist_dnsredir.cmd```
+     ```service_install_russia_blacklist_YOUTUBE.cmd```
+     ```service_install_russia_blacklist_YOUTUBE_ALT.cmd```
+     Так как они устанавливают службу в Windows, а потом их сложно будет выкорчевывать из системы. 
+     </br>
+4. После строчки ```goodbyedpi.exe``` вместо ```-9``` вставим цифру в соответствии от вашего [провайдера](https://github.com/ValdikSS/GoodbyeDPI/issues/378).
+5. Ну а после ```--fake-from-hex``` всталяем рандомный hex, с помощью [hex генератора](https://www.browserling.com/tools/random-hex). В графе "How many digits?" вводим 120 и более, а после нажимаем "Generate Hex", копируем и вставляем в файл.
+6. Сохраняем и выходим.
+7. И запускаем нужный нам скрипт.
+8. Готово.
+
+## Zapret для YouTube (Linux / Роутеры)
 
 1. Необходимо скачать программу и необходимые компоненты. Сделаем мы это с помощью Git. 
 Установка на [Linux](https://git-scm.com/downloads/linux):
@@ -60,13 +92,13 @@
 **! Если нужна разблокировка других сервисов, то смотрим на этот [пункт](#zapret-для-всех-блокировок) !**
 
 5. Запускаем скрипт установки службы
-   ```./install_easy.sh```
-
+   ```./install_easy.sh```  </br>
     И делаем следующее
     - Select firewall type - Выбираем на свое усмотрение
     - enable IPV6 suppor - Выбираем отталкиваясь от того какой версии IP вы пользуетесь
     - select MODE - рекомендую выбирать между tpws и nfqws. Я буду показывать напримере nfqws, т.к. работает она лучше.
-    - do you want to edit the options - Да, мы хотим изменить, а потому вводим Y и изменяем опции
+    - do you want to edit the options - Да, мы хотим изменить, а потому вводим Y и изменяем опции 
+    </br>
     ```
     NFQWS_OPT_DESYNC=""
     #NFQWS_OPT_DESYNC_SUFFIX=
@@ -110,7 +142,7 @@
 - do you want to auto download ip/host list - Скачиваем сам hostlist
 - your choice - Рекомендую оставить по умолчанию
   **Готово!**
-6. Далее вставим ссылки на сервера Google 
+1. Далее вставим ссылки на сервера Google 
    ```
     googlevideo.com
     youtubei.googleapis.com
@@ -119,9 +151,10 @@
     ```
     В файл zapret-hosts-user.txt
     ```nano /opt/zapret/ipser/zapret-hosts-user.txt```
-    Сохраняемся и выходим
+    Сохраняемся и выходим 
+    </br>
 
-7. **(Если хотите QUIC)** В вашем браузере зайдите в доп. настройки
+2. **(Если хотите QUIC)** В вашем браузере зайдите в доп. настройки
 - Chrome - ```chrome://flags/#enable-quic```
 - Vivaldi - ```vivaldi://flags/#enable-quic```
 - Opera - ```opera://flags/#enable-quic```
@@ -147,11 +180,55 @@
 - Теперь ожидаем окончание проверки.
 - После окончания проверки появится итоговый результат. Выглядит он примерно так
   ```ipv4 rutracker.org curl_test_https_tls12:nfqws --dpi-desync=fake,split2 --dpi-desync-ttl=3```
+  </br>
   Важна нам часть после :
   - nfqws это MODE, который вы выбираете в скрипте install_easy.sh, у вас может быть и tpws
-  - Строку ```--dpi-desync=fake,split2 --dpi-desync-ttl=3``` нам необходимо вставить в опцию ```NFQWS_OPT_DESYNC``` или ```NFQWS_OPT_DESYNC_QUIC```
+  - Строку ```--dpi-desync=fake,split2 --dpi-desync-ttl=3``` нам необходимо вставить в опцию ```NFQWS_OPT_DESYNC``` или ```NFQWS_OPT_DESYNC_QUIC``` 
+  </br>
 
 2. Теперь после найденной стратегии запускаем скрипт ```./install_easy.sh```, доходим до "do you want to edit the options" и редактируем конфиг.
+
+## SpoofDPI (Linux / MacOS)
+1. Скачиваем [SpoofDPI](https://github.com/xvzc/SpoofDPI) с помощью комманд:
+   - MacOS Intel
+   ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s darwin-amd64```
+   - MacOS Apple Silicon
+   ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s darwin-arm64```
+   - Linux amd64 (x86/x64)
+   ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s linux-amd64```
+   - Linux arm
+   ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s linux-arm```
+   - Linux arm64
+   ```curl -fsSL https://raw.githubusercontent.com/xvzc/SpoofDPI/main/install.sh | bash -s linux-arm64```
+   </br>
+2. Далее в зависимости от того какая у вас оболочка терминал Bash или Zsh, редактируем файл 
+   - Zsh - ```nano ~/.zshrc```
+   - Bash - ```nano ~/.bashrc```
+
+Проверить какая у вас стоит оболочка можно с помощью комманды ```echo $SHELL```
+
+3. В конфиге оболочки вставляем строку 
+  ```export PATH=$PATH:~/.spoofdpi/bin```
+
+  Чтобы вводя ```spoofdpi``` у вас открывалась эта программа. Мы создали некоторую ассоциацию с программой.
+
+4. Необходимо перезапустить терминал, а лучше перезагрузить компьютер.
+5. Теперь запускаем программу (можем также добавить пару [параметров](https://github.com/xvzc/SpoofDPI/blob/main/_docs/README_ru.md#%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5))
+   ```spoofdpi```
+
+6. Программа запущена, но она не будет работать, т.к. мы должны запустить браузер с параметрами прокси на loopback
+   ```google-chrome --proxy-server="http://127.0.0.1:8080"```
+
+   Вместо "google-chrome" вводим свой браузер будь-то
+
+   ```chromium --proxy-server="http://127.0.0.1:8080"```
+   ```firefox --proxy-server="http://127.0.0.1:8080"```
+   ```vivaldi --proxy-server="http://127.0.0.1:8080"```
+
+7. Готово. Всё должно заработать.
+
+Могу посоветовать пару параметров для этой программы
+```spoofdpi```
 
 ## ByeDPI на Android
 1. Скачиваем программу с официального [репозитория](https://github.com/dovecoteescapee/ByeDPIAndroid). В релизах скачиваем [.apk](https://github.com/dovecoteescapee/ByeDPIAndroid/releases)
@@ -159,7 +236,7 @@
 3. Сразу не запускаем, а заходим в настройки с помощью шестерёнки в правом верхнем углу.
 4. В графе "DNS" вводим ```8.8.8.8``` вместо ```1.1.1.1``` (то есть вводим DNS Google вместо Cloudflare)
 5. Далее выбираем пункт UI editor
-6. Тут уже можно поиграться с настройками и выявить стратегию обхода блокировок. Я например выставил такие параметры 
+6. Тут уже можно поиграться с настройками и выявить стратегию обхода блокировок. Я например выставил такие параметры  </br>
     **Desync**
     - Hosts - Disabled
     - Default TTL - 0
@@ -183,7 +260,7 @@
     - Split TLS record - Включено
     - TLS record split position - 1
     - Split TLS record at SNI - Включено
-
+    </br>
 7. После всех мохинаций выходим из настроек программы и нажимаем кнопку Connect / Подключиться
 8. **Готово**
 
@@ -237,6 +314,7 @@
   2. Здесь есть пункт "Расход батареи / Экономия батареи / Использование батареи / App battery usage"
   3. И выбираем пункт "Optimized / Оптимизированый" и в таком духе. 
   4. Готово
+  </br>
 - Могу дать совет, не используйте приложение в фоне постоянно. Посмотрели YouTube, условно говоря, выключили и всё.
 
 ### ByeDPI не работает (Не работает обход блокировок)
@@ -246,3 +324,5 @@
   - Out-of-band
 
 Fake не рекомендую для YouTube, т.к. он работает так чтобы пропускать траффик через "сайт прокладку", а это медленнее чем варианты указанные выше. У меня по крайней мере работал медленно.
+
+**Автор: 0x201 :3**
