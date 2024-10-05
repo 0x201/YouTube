@@ -2,17 +2,17 @@
 
 В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/) или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
 
-|_[Как обойти DPI](#как-обойти-dpi)
-  &nbsp;&nbsp;&nbsp;&nbsp;| [GoodByeDPI (Windows)](#goodbyedpi-windows)
-  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для YouTube (Linux / Роутеры)](#zapret-для-youtube-подходит-для-linux-и-роутеров)
-  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для всех блокировок](#zapret-для-всех-блокировок)
-  &nbsp;&nbsp;&nbsp;&nbsp;| [SpoofDPI (MacOS / Linux)](#spoofdpi-linux--macos)
-  &nbsp;&nbsp;&nbsp;&nbsp;| [ByeDPI (Android)](#byedpi-на-android)
-  &nbsp;&nbsp;&nbsp;&nbsp;| _ [Решение возникших пробелем](#решение-возникших-проблем)
-  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Скрипты не являются исполняемыми](#скрипты-не-являются-исполняемыми)
-  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Нет Bash](#нет-bash)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI жрет много батереи](#byedpi-жрет-много-батареи)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI не работает (Не работает обход блокировок)](#byedpi-не-работает-не-работает-обход-блокировок)  
+|_[Как обойти DPI](#как-обойти-dpi)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| [GoodByeDPI (Windows)](#goodbyedpi-windows)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для YouTube (Linux / Роутеры)](#zapret-для-youtube-подходит-для-linux-и-роутеров)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для всех блокировок](#zapret-для-всех-блокировок)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| [SpoofDPI (MacOS / Linux)](#spoofdpi-linux--macos)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| [ByeDPI (Android)](#byedpi-на-android)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;| _ [Решение возникших пробелем](#решение-возникших-проблем)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Скрипты не являются исполняемыми](#скрипты-не-являются-исполняемыми)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Нет Bash](#нет-bash)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI жрет много батереи](#byedpi-жрет-много-батареи)</br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI не работает (Не работает обход блокировок)](#byedpi-не-работает-не-работает-обход-блокировок)</br>
 
 ## GoodByeDPI (Windows)
 1. Скачайте архив с [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/realeses)
@@ -22,17 +22,21 @@
    - Если вам нужен YouTube рекомендую пользоваться ```1_russia_blacklist_YOUTUBE.cmd``` или ```1_russia_blacklist_YOUTUBE_ALT.cmd```
    - Ну а если нужна раблокировка всех сайтов, но необязательно YouTube, то открываем ```1_russia_blacklist.cmd```
    - Не рекомендуется использовать скрипты 
-     ```service_install_russia_blacklist.cmd```
-     ```service_install_russia_blacklist_dnsredir.cmd```
-     ```service_install_russia_blacklist_YOUTUBE.cmd```
-     ```service_install_russia_blacklist_YOUTUBE_ALT.cmd```
+
+     ```
+     service_install_russia_blacklist.cmd
+     service_install_russia_blacklist_dnsredir.cmd
+     service_install_russia_blacklist_YOUTUBE.cmd
+     service_install_russia_blacklist_YOUTUBE_ALT.cmd
+     ```
+
      Так как они устанавливают службу в Windows, а потом их сложно будет выкорчевывать из системы. 
      </br>
-4. После строчки ```goodbyedpi.exe``` вместо ```-9``` вставим цифру в соответствии от вашего [провайдера](https://github.com/ValdikSS/GoodbyeDPI/issues/378).
-5. Ну а после ```--fake-from-hex``` всталяем рандомный hex, с помощью [hex генератора](https://www.browserling.com/tools/random-hex). В графе "How many digits?" вводим 120 и более, а после нажимаем "Generate Hex", копируем и вставляем в файл.
-6. Сохраняем и выходим.
-7. И запускаем нужный нам скрипт.
-8. Готово.
+1. После строчки ```goodbyedpi.exe``` вместо ```-9``` вставим цифру в соответствии от вашего [провайдера](https://github.com/ValdikSS/GoodbyeDPI/issues/378).
+2. Ну а после ```--fake-from-hex``` всталяем рандомный hex, с помощью [hex генератора](https://www.browserling.com/tools/random-hex). В графе "How many digits?" вводим 120 и более, а после нажимаем "Generate Hex", копируем и вставляем в файл.
+3. Сохраняем и выходим.
+4. И запускаем нужный нам скрипт.
+5. Готово.
 
 ## Zapret для YouTube (Linux / Роутеры)
 
