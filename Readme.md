@@ -1,6 +1,6 @@
 # Как обойти DPI
 
-В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/) или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
+В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/), или [туда](https://ru.wikipedia.org/wiki/Deep_packet_inspection), или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
 
 |_[Как обойти DPI](#как-обойти-dpi)<br />
   &nbsp;&nbsp;&nbsp;&nbsp;| [GoodByeDPI (Windows)](#goodbyedpi-windows)<br />
@@ -15,7 +15,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI не работает (Не работает обход блокировок)](#byedpi-не-работает-не-работает-обход-блокировок)<br />
 
 ## GoodByeDPI (Windows)
-1. Скачайте архив с [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/realeses)
+1. Скачайте архив с [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/releases)
 2. Распаковываем в любую удобную для нас папку.
 3. Заходим в неё и редактируем файл:
   
@@ -46,7 +46,6 @@
 5. Готово.
 
 ## Zapret для YouTube (Linux / Роутеры)
-
 1. Необходимо скачать программу и необходимые компоненты. Сделаем мы это с помощью Git. 
 Установка на [Linux](https://git-scm.com/downloads/linux):
 - Debian / Ubuntu / Debian подобные
@@ -130,8 +129,7 @@
     Всё что за # - комменатрии, их не трогаем. Нужны нам лишь "NFQWS_OPT_DESYNC" и *(опционально, в зависимости от того будете вы использовать протокол QUIC или нет) "NFQWS_OPT_DESYNC_QUIC"*
     <br />
 
-    Выбираем способ обхода замедления: **split2**, **disorder2**, fake
-    Я рекоменудую выбирать выделенные варианты. Теперь вписываем в "NFQWS_OPT_DESYNC" после ="
+    Выбираем способ обхода замедления. Теперь вписываем в "NFQWS_OPT_DESYNC" после ="
     ```NFQWS_OPT_DESYNC="--dpi-desync=split2```
     или же
     ```NFQWS_OPT_DESYNC="--dpi-desync=disorder2```
@@ -145,12 +143,7 @@
 
 - После настройки опций сохраняемся и выходим.
 - WAN interface - Рекомендую выбрать ANY
-- enable http support - Если вы хотите разблокировать только YouTube, могу порекомендовать отключить, т.к. запросы на сервера Google происходят протоколу https. 
-Вот примерные ссылки на сервер с видео Google:
-  ```
-  https://rr1---sn-u5uuxaxjvhg0-ocje.googlevideo.com/
-  https://r2---sn-8vap5-3c2l.googlevideo.com
-  ```
+- enable http support - Включаем
 - enable https support - Включаем
 - enable quic support - Можно не включать, опять же в зависимости от того будете ли вы пользоваться протоколом QUIC или нет
 - select filtering - Рекомендую выбирать hostlist
@@ -160,10 +153,30 @@
   **Готово!**
 1. Далее вставим ссылки на сервера Google 
    ```
-    googlevideo.com
-    youtubei.googleapis.com
+    play.google.ru
+    play.google.com
+    account.youtube.com
+    youtube.com
+    www.youtube.com
     i.ytimg.com
+    studio.youtube.com
+    googlevideo.com
     yt3.ggpht.com
+    yt4.ggpht.com
+    youtu.be
+    yt.be
+    ytimg.com
+    ggpht.com
+    gvt1.com
+    youtube.googleapis.com
+    youtubeembeddedplayer.googleapis.com
+    ytimg.l.google.com
+    nhacmp3youtube.com
+    jnn-pa.googleapis.com
+    youtube-nocookie.com
+    youtube-ui.l.google.com
+    yt-video-upload.l.google.com
+    wide-youtube.l.google.com
     ```
     В файл zapret-hosts-user.txt
     ```nano /opt/zapret/ipser/zapret-hosts-user.txt```
@@ -174,7 +187,7 @@
 - Vivaldi - ```vivaldi://flags/#enable-quic```
 - Opera - ```opera://flags/#enable-quic```
 - Yandex - ```browser://flags/#enable-quic```
-- FireFox - зайдите в ```about:config``` и в поиске введите ```network.http.http3.enable``` , Переставьте значение на true
+- FireFox - зайдите в ```about:config``` и в поиске введите ```network.http.http3.enable``` , переставьте значение на true
 
  Для лучшего эффекта можно перезагрузить компьютер или же перезапустить браузер
 
@@ -193,12 +206,12 @@
   Standart - Классическая проверка (1-1.5 часов)
   Force - Максимальная проверка (более 2-ух часов)
 - Теперь ожидаем окончание проверки.
-- После окончания проверки появится итоговый результат. Выглядит он примерно так
+- После окончания проверки появится итоговый результат. Выглядит он примерно так **(ЭТО НЕ ГОТОВЫЙ КОНФИГ)**:
   ```ipv4 rutracker.org curl_test_https_tls12:nfqws --dpi-desync=fake,split2 --dpi-desync-ttl=3```
   Важна нам часть после :
   - nfqws это MODE, который вы выбираете в скрипте install_easy.sh, у вас может быть и tpws
   - Строку ```--dpi-desync=fake,split2 --dpi-desync-ttl=3``` нам необходимо вставить в опцию ```NFQWS_OPT_DESYNC``` или ```NFQWS_OPT_DESYNC_QUIC``` 
-  
+
 
 2. Теперь после найденной стратегии запускаем скрипт ```./install_easy.sh```, доходим до "do you want to edit the options" и редактируем конфиг.
 
@@ -247,38 +260,16 @@
 1. Скачиваем программу с официального [репозитория](https://github.com/dovecoteescapee/ByeDPIAndroid). В релизах скачиваем [.apk](https://github.com/dovecoteescapee/ByeDPIAndroid/releases)
 2. Устанавливаем на ваш телефон и запускаем.
 3. Сразу не запускаем, а заходим в настройки с помощью шестерёнки в правом верхнем углу.
-4. В графе "DNS" вводим ```8.8.8.8``` вместо ```1.1.1.1``` (то есть вводим DNS Google вместо Cloudflare)
+4. **(Необязательно, т.к. сервера Google медленее (либо и их замедляют))** В графе "DNS" вводим ```8.8.8.8``` вместо ```1.1.1.1``` (то есть вводим DNS Google вместо Cloudflare)
 5. Далее выбираем пункт UI editor
-6. Тут уже можно поиграться с настройками и выявить стратегию обхода блокировок. Я например выставил такие параметры <br />
-    **Desync**
-    - Hosts - Disabled
-    - Default TTL - 0
-    - Desync method - Out-of-band
-    - Split position - 1
-    - Split at host - Выключено
-    - Drop SACK - Выключено
-    - OOB Data - a
-   
-   **Protocols**
-   - Desync HTTP
-   - Desync HTTPS
-   - Desync UDP
-  
-    **HTTP**
-   - Host mixed case - Включено
-   - Domain mixed case - Включено
-   - Host remove spaces - Выключено
-  
-    **HTTPS**
-    - Split TLS record - Включено
-    - TLS record split position - 1
-    - Split TLS record at SNI - Включено
-    <br />
+6. Тут уже можно поиграться с настройками и выявить стратегию обхода блокировок.
 7. После всех мохинаций выходим из настроек программы и нажимаем кнопку Connect / Подключиться
 8. **Готово**
 
-## Решение возникших проблем
+Или же можно вписать параметры в консоли. Найти их можно на этом [форуме](https://4pda.to/forum/index.php?showtopic=1092092)
 
+## Решение возникших проблем
+В данном разделе вы скорее всего найдёте решение вашей проблемы.
 ### Скрипты не являются исполняемыми
 Для того чтобы дать скриптам права на исполнение вводим комманду
 ```chmod u+x "путь до скрипта"```
@@ -331,11 +322,6 @@
 - Могу дать совет, не используйте приложение в фоне постоянно. Посмотрели YouTube, условно говоря, выключили и всё.
 
 ### ByeDPI не работает (Не работает обход блокировок)
-Выход один, тыкаться в настройках с надеждой "авось заработает". В конце концов цензоры на месте не сидят и занимаются своей задачей, мешая обходить их блокировки. Если хочется готовый ответ, то выбирайте в Desync method что-то из этого
-  - Split
-  - Disorder
-  - Out-of-band
-
-Fake не рекомендую для YouTube, т.к. он работает так чтобы пропускать траффик через "сайт прокладку", а это медленнее чем варианты указанные выше. У меня по крайней мере работал медленно.
+Выход один, тыкаться и подбирать консольные параметры в настройках с надеждой "авось заработает". В конце концов цензоры на месте не сидят и занимаются своей задачей, мешая обходить их блокировки. Вот [здесь](https://4pda.to/forum/index.php?showtopic=1092092) или [здесь](https://github.com/dovecoteescapee/ByeDPIAndroid/discussions/64) можно найти всё готовенькое, но не факт.
 
 **Автор: 0x201 :3**
