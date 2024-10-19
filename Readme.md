@@ -1,18 +1,24 @@
 # Как обойти DPI
 
-В данном гайде я расскажу как исправить проблему зависающего YouTube с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов). В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/), или [туда](https://ru.wikipedia.org/wiki/Deep_packet_inspection), или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
+В данном гайде я расскажу как исправить проблему зависающего YouTube и заблокированных сайтов с помощью различных программ обхода блокировок DPI (Deep Packet Inspection / Глубокое исследование пакетов).
+> [!WARNING]
+> В работу DPI погружать не буду, а сразу перейду к делу. Но если есть желание узнать об этой технологии, вам [сюда](https://web.archive.org/web/20230331233644/https://habr.com/ru/post/335436/), или [туда](https://ru.wikipedia.org/wiki/Deep_packet_inspection), или [here](https://geneva.cs.umd.edu/papers/geneva_ccs19.pdf).
 
-|_[Как обойти DPI](#как-обойти-dpi)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| [GoodByeDPI (Windows)](#goodbyedpi-windows)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для YouTube (Linux / Роутеры)](#zapret-для-youtube-подходит-для-linux-и-роутеров)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| [Zapret для всех блокировок](#zapret-для-всех-блокировок)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| [SpoofDPI (MacOS / Linux)](#spoofdpi-linux--macos)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| [ByeDPI (Android)](#byedpi-на-android)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;| _ [Решение возникших пробелем](#решение-возникших-проблем)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Скрипты не являются исполняемыми](#скрипты-не-являются-исполняемыми)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;| [Нет Bash](#нет-bash)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI жрет много батереи](#byedpi-жрет-много-батареи)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [ByeDPI не работает (Не работает обход блокировок)](#byedpi-не-работает-не-работает-обход-блокировок)<br />
+- [Как обойти DPI](#как-обойти-dpi)
+  - [GoodByeDPI (Windows)](#goodbyedpi-windows)
+  - [Zapret для YouTube (Linux / Роутеры)](#zapret-для-youtube-linux--роутеры)
+  - [Zapret для всех блокировок](#zapret-для-всех-блокировок)
+  - [Zapret (Windows)](#zapret-windows)
+  - [Zapret, но круче (Windows)](#zapret-но-круче-windows)
+  - [SpoofDPI (Linux / MacOS)](#spoofdpi-linux--macos)
+  - [ByeDPI (Android)](#byedpi-android)
+  - [Решение возникших проблем](#решение-возникших-проблем)
+    - [GoodByeDPI не работает](#goodbyedpi-не-работает)
+    - [Скрипты Zapret не являются исполняемыми](#скрипты-zapret-не-являются-исполняемыми)
+    - [Нет Bash](#нет-bash)
+    - [Zapret не запущен](#zapret-не-запущен)
+    - [ByeDPI жрет много батареи](#byedpi-жрет-много-батареи)
+  - [Источники / Готовые конфиги](#источники--готовые-конфиги)
 
 ## GoodByeDPI (Windows)
 1. Скачайте архив с [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/releases)
@@ -43,7 +49,6 @@
 2. Ну а после ```--fake-from-hex``` всталяем рандомный hex, с помощью [hex генератора](https://www.browserling.com/tools/random-hex). В графе "How many digits?" вводим 120 и более, а после нажимаем "Generate Hex", копируем и вставляем в файл.
 3. Сохраняем и выходим.
 4. И запускаем нужный нам скрипт.
-5. Готово.
 
 ## Zapret для YouTube (Linux / Роутеры)
 1. Необходимо скачать программу и необходимые компоненты. Сделаем мы это с помощью Git. 
@@ -98,8 +103,9 @@
 4. Далее запускаем скрипты установки всех нужных компонентов
    ```./install_bin.sh```
    ```./install_prereq.sh```
-   
-**! Если нужна разблокировка других сервисов, то смотрим на этот [пункт](#zapret-для-всех-блокировок) !**
+
+> [!NOTE]
+> Если нужна разблокировка других сервисов, то смотрим на этот [пункт](#zapret-для-всех-блокировок)
 
 5. Запускаем скрипт установки службы
    ```./install_easy.sh```
@@ -126,20 +132,14 @@
     #NFQWS_OPT_DESYNC_QUIC6_SUFFIX=
     ```
   
-    Всё что за # - комменатрии, их не трогаем. Нужны нам лишь "NFQWS_OPT_DESYNC" и *(опционально, в зависимости от того будете вы использовать протокол QUIC или нет) "NFQWS_OPT_DESYNC_QUIC"*
-    <br />
+    Всё что за # - комменатрии, их не трогаем. Нужны нам лишь ```NFQWS_OPT_DESYNC``` и *(опционально, в зависимости от того будете вы использовать протокол QUIC или нет) ```NFQWS_OPT_DESYNC_QUIC```* 
 
-    Выбираем способ обхода замедления. Теперь вписываем в "NFQWS_OPT_DESYNC" после ="
-    ```NFQWS_OPT_DESYNC="--dpi-desync=split2```
-    или же
-    ```NFQWS_OPT_DESYNC="--dpi-desync=disorder2```
-    или же
-    ```NFQWS_OPT_DESYNC="--dpi-desync=fake --dpi-desync-repeats=6```
+    Выбираем способ обхода замедления. Теперь вписываем в ```NFQWS_OPT_DESYNC``` после ="
+    ```NFQWS_OPT_DESYNC="ваш способ обхода```
     
     Для протокола QUIC
     
-    ```NFQWS_OPT_DESYNC_QUIC="--dpi-desync=fake,split2 --dpi-desync-ttl=3"```
-    Цифру 3 можно увеличить на 1 или уменьшить на 1, если не сработает. Увы, придется перебрать множество вариантов чтобы найти рабочий.
+    ```NFQWS_OPT_DESYNC_QUIC="ваш способ обхода"```
 
 - После настройки опций сохраняемся и выходим.
 - WAN interface - Рекомендую выбрать ANY
@@ -149,38 +149,11 @@
 - select filtering - Рекомендую выбирать hostlist
 - do you want to auto download ip/host list - Скачиваем сам hostlist
 - your choice - Рекомендую оставить по умолчанию
-  
-  **Готово!**
-1. Далее вставим ссылки на сервера Google 
-   ```
-    play.google.ru
-    play.google.com
-    account.youtube.com
-    youtube.com
-    www.youtube.com
-    i.ytimg.com
-    studio.youtube.com
-    googlevideo.com
-    yt3.ggpht.com
-    yt4.ggpht.com
-    youtu.be
-    yt.be
-    ytimg.com
-    ggpht.com
-    gvt1.com
-    youtube.googleapis.com
-    youtubeembeddedplayer.googleapis.com
-    ytimg.l.google.com
-    nhacmp3youtube.com
-    jnn-pa.googleapis.com
-    youtube-nocookie.com
-    youtube-ui.l.google.com
-    yt-video-upload.l.google.com
-    wide-youtube.l.google.com
-    ```
-    В файл zapret-hosts-user.txt
-    ```nano /opt/zapret/ipser/zapret-hosts-user.txt```
-    Сохраняемся и выходим 
+
+1. Далее вставим ссылки из файла [blacklist.txt](https://github.com/0x201/YouTube/blob/main/blacklist.txt)
+В файл zapret-hosts-user.txt
+```nano /opt/zapret/ipser/zapret-hosts-user.txt```
+Сохраняемся и выходим 
     
 2. **(Если хотите QUIC)** В вашем браузере зайдите в доп. настройки
 - Chrome - ```chrome://flags/#enable-quic```
@@ -189,7 +162,8 @@
 - Yandex - ```browser://flags/#enable-quic```
 - FireFox - зайдите в ```about:config``` и в поиске введите ```network.http.http3.enable``` , переставьте значение на true
 
- Для лучшего эффекта можно перезагрузить компьютер или же перезапустить браузер
+> [!IMPORTANT]
+> Для лучшего эффекта можно перезагрузить компьютер или же перезапустить браузер.
 
 ## Zapret для всех блокировок
 1. Запускаем скрипт для выявления стратегии обхода блокировок
@@ -215,6 +189,23 @@
 
 2. Теперь после найденной стратегии запускаем скрипт ```./install_easy.sh```, доходим до "do you want to edit the options" и редактируем конфиг.
 
+## Zapret (Windows)
+1. Скачиваем [программу](https://github.com/bol-van/zapret-win-bundle) из репозитория.
+2. Распаковываем в любое удобное место.
+3. Зайдём в папку с Zapret и уже там в ```zapret-winws```.
+4. Запустим файл ```preset_russia.cmd```
+
+## Zapret, но круче (Windows)
+Тот же Zapret, но с готовыми (рабочими!!1) конфигами.
+
+1. Скачиваем [программу](https://github.com/Flowseal/zapret-discord-youtube/releases) с репозитория.
+2. Распаковываем в удобное для нас место и запускаем .cmd файл в зависимости от того, что вам необходимо:
+- ```general.bat``` - для всех блокировок
+- ```general (ALT)``` - альтернативные варианты
+- ```general (МГТС)``` - для провайдера МГТС
+- ```discord.bat``` - для сервиса Discord
+- ```service_install``` - устанавливает службу в Windows **(не рекомендую)**
+
 ## SpoofDPI (Linux / MacOS)
 1. Скачиваем [SpoofDPI](https://github.com/xvzc/SpoofDPI) с помощью комманд:
    - MacOS Intel
@@ -231,12 +222,12 @@
    - Zsh - ```nano ~/.zshrc```
    - Bash - ```nano ~/.bashrc```
 
-Проверить какая у вас стоит оболочка можно с помощью комманды ```echo $SHELL```
+Проверить какая у вас стоит оболочка, можно с помощью комманды ```echo $SHELL```
 
 3. В конфиге оболочки вставляем строку 
   ```export PATH=$PATH:~/.spoofdpi/bin```
 
-  Чтобы вводя ```spoofdpi``` у вас открывалась эта программа. Мы создали некоторую ассоциацию с программой.
+Чтобы вводя ```spoofdpi``` у вас открывалась эта программа. Мы создали некоторую ассоциацию с программой.
 
 4. Необходимо перезапустить терминал, а лучше перезагрузить компьютер.
 5. Теперь запускаем программу (можем также добавить пару [параметров](https://github.com/xvzc/SpoofDPI/blob/main/_docs/README_ru.md#%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5))
@@ -245,18 +236,9 @@
 6. Программа запущена, но она не будет работать, т.к. мы должны запустить браузер с параметрами прокси на loopback
    ```google-chrome --proxy-server="http://127.0.0.1:8080"```
 
-   Вместо "google-chrome" вводим свой браузер будь-то
+    Вместо ```google-chrome``` вводим название своего браузера.
 
-   ```chromium --proxy-server="http://127.0.0.1:8080"```
-   ```firefox --proxy-server="http://127.0.0.1:8080"```
-   ```vivaldi --proxy-server="http://127.0.0.1:8080"```
-
-7. Готово. Всё должно заработать.
-
-Могу посоветовать пару параметров для этой программы
-```spoofdpi```
-
-## ByeDPI на Android
+## ByeDPI (Android)
 1. Скачиваем программу с официального [репозитория](https://github.com/dovecoteescapee/ByeDPIAndroid). В релизах скачиваем [.apk](https://github.com/dovecoteescapee/ByeDPIAndroid/releases)
 2. Устанавливаем на ваш телефон и запускаем.
 3. Сразу не запускаем, а заходим в настройки с помощью шестерёнки в правом верхнем углу.
@@ -264,13 +246,21 @@
 5. Далее выбираем пункт UI editor
 6. Тут уже можно поиграться с настройками и выявить стратегию обхода блокировок.
 7. После всех мохинаций выходим из настроек программы и нажимаем кнопку Connect / Подключиться
-8. **Готово**
 
-Или же можно вписать параметры в консоли. Найти их можно на этом [форуме](https://4pda.to/forum/index.php?showtopic=1092092)
+Или же можно вписать параметры в консоли. Найти их можно в [ссылках](#источники--готовые-конфиги).
 
 ## Решение возникших проблем
 В данном разделе вы скорее всего найдёте решение вашей проблемы.
-### Скрипты не являются исполняемыми
+
+### GoodByeDPI не работает
+По GoodByeDPI РКН нанесли мощный удар, что аж большинство конфигураций не помогает. Тут выходов немного:
+
+- [Собрать программу](https://github.com/ValdikSS/GoodbyeDPI?tab=readme-ov-file#how-to-build-from-source) из исходного кода.
+- Поискать рабочие [конфигурации](#источники--готовые-конфиги).
+- Можно перейти на аналоги по типу: **Zapret**, SpoofDpi
+- Ну или на крайний случай VPN, который как по мне работает безукоризненно. Но тут давайте ищите сами \:)
+
+### Скрипты Zapret не являются исполняемыми
 Для того чтобы дать скриптам права на исполнение вводим комманду
 ```chmod u+x "путь до скрипта"```
 
@@ -316,12 +306,22 @@
 - Можно включить оптимизацию батареи для данного приложения 
   1. Переходим в настройки телефона, ищем пункт "Приложения", там ищем "ByeDPI", нажимаем на приложение.
   2. Здесь есть пункт "Расход батареи / Экономия батареи / Использование батареи / App battery usage"
-  3. И выбираем пункт "Optimized / Оптимизированый" и в таком духе. 
-  4. Готово
+  3. И выбираем пункт "Optimized / Оптимизированый" и в таком духе.
   
 - Могу дать совет, не используйте приложение в фоне постоянно. Посмотрели YouTube, условно говоря, выключили и всё.
 
-### ByeDPI не работает (Не работает обход блокировок)
-Выход один, тыкаться и подбирать консольные параметры в настройках с надеждой "авось заработает". В конце концов цензоры на месте не сидят и занимаются своей задачей, мешая обходить их блокировки. Вот [здесь](https://4pda.to/forum/index.php?showtopic=1092092) или [здесь](https://github.com/dovecoteescapee/ByeDPIAndroid/discussions/64) можно найти всё готовенькое, но не факт.
+## Источники / Готовые конфиги
+> [!CAUTION]
+> NTC является заблокированным сайтом, как и ветка с ByeDPI на 4PDA **(ТОЛЬКО VPN ИЛИ ПРОКСИ)**. Зайти можно либо с обходом блокировок (DPI), либо с VPN, либо с прокси.
+
+Ссылки на готовые конфиги:
+- ByeDPI - [4PDA](https://4pda.to/forum/index.php?showtopic=1092092), [GitHub Issue](https://github.com/dovecoteescapee/ByeDPIAndroid/discussions/64), [NTC](https://ntc.party/t/byedpi-for-android-%D0%BE%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5/9075/267)
+- GoodByeDPI - [NTC скрипт для нахождения стратегии](https://ntc.party/t/goodcheck-%D0%B1%D0%BB%D0%BE%D0%BA%D1%87%D0%B5%D0%BA-%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82-%D0%B4%D0%BB%D1%8F-goodbyedpi-zapret-byedpi/10880), [GitHub Issue](https://github.com/ValdikSS/GoodbyeDPI/issues/378)
+- Zapret - [GitHub Issue](https://github.com/bol-van/zapret/discussions/200), [NTC](https://ntc.party/t/zapret-%D0%BE%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5/)
+- SpoofDPI - [GitHub параметры](https://github.com/xvzc/SpoofDPI?tab=readme-ov-file#usage)
+
+Список заблокированных сайтов позаимствовал от:
+ - [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI/releases)
+ - [GitHub Issue Zapret](https://github.com/bol-van/zapret/discussions/200#discussioncomment-10956108)
 
 **Автор: 0x201 :3**
